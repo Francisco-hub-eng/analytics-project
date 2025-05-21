@@ -12,9 +12,10 @@ services:
     environment:
       <<: *airflow-common-env
       AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: 'True'
-    airflow-scheduler:
-      <<: *airflow-common
-      command: scheduler
-      environment:
-        <<: *airflow-common-env
-        AIRFLOW__SCHEDULER__MIN_FILE_PROCESS_INTERVAL: '30'
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+    environment:
+      <<: *airflow-common-env
+      AIRFLOW__SCHEDULER__MIN_FILE_PROCESS_INTERVAL: '30'
