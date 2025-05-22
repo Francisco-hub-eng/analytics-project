@@ -11,3 +11,28 @@ def health_check_response(response):
     return response.status_code == 200 and response.json() == {
         "message": "API health check successful"
     }
+
+def insert_update_player_data(**content):
+
+    player_json = context["ti"].xcom_pull(task_ids = "api_player_query")
+
+    if player_json:
+        upsert_player_data(player_json)
+    else:
+        logging.warning("No player data found.")
+
+@dag(schedule_interval=None)
+def recurring_player_api_insert_update_dag():
+
+    api_health_check_task = HttpOperator(
+        task_id = "check_api_health_check_endpoint",
+        http_conn_id = "sportsworldcentral_url",
+        endpoint ="/",
+        method="GET",
+        headers={"Content-Type": "application/json"},
+        response_check = health_check_response
+    )
+
+    temp_min_last_change_date = "2024-04-01"
+
+    
