@@ -27,3 +27,24 @@ try:
     flat_team_df_ordered = flat_team_df_ordered[
         flat_team_df_ordered['league_id'] == selected_league
     ]
+
+    nfl_data_2023_df = nfl.import_seasonal_data([2023], 'REG')
+
+    columns_to_select = ['player_id', 'passing_tds', 'rushing_tds', 'receiving_tds']
+    nfl_data_2023_subset_df = nfl_data_2023_df[columns_to_select].copy()
+
+    nfl_data_2023_subset_df['total_tds']= (
+        nfl_data_2023_subset_df['passing_tds'] + 
+        nfl_data_2023_subset_df['rushing_tds'] +
+        nfl_data_2023_subset_df['receiving_tds']
+    )
+
+    merged_df = pd.merge(
+        flat_team_df_ordered,
+        nfl_data_2023_subset_df,
+        how = 'left',
+        left_on= 'gsis_id',
+        right_on='player_id'
+    )
+
+    
