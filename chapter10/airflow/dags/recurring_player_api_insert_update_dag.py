@@ -12,7 +12,7 @@ def health_check_response(response):
         "message": "API health check successful"
     }
 
-def insert_update_player_data(**content):
+def insert_update_player_data(**context):
 
     player_json = context["ti"].xcom_pull(task_ids = "api_player_query")
 

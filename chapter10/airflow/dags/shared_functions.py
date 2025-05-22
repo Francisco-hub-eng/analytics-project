@@ -33,14 +33,14 @@ def upsert_player_data(player_json):
                                     gsis_id = excluded.gsis_id,
                                     first_name = excluded.first_name,
                                     last_name = excluded.last_name,
-                                    position = exclude.position,
+                                    position = excluded.position,
                                     last_changed_date = excluded.last_changed_date
                     """, (
                         player['player_id'], player['gsis_id'],
                         player['first_name'],
                         player['last_name'],
                         player['position'],
-                        player['last_cjanged_date']
+                        player['last_changed_date']
                     ))
                 except Exception as e:
                     logging.error(
