@@ -24,7 +24,7 @@ try:
         if 'unique_leagues' not in st.session_state:
             st.session_state['unique_leagues'] = unique_leagues
 
-        selected_league = st.sidebar._selectbox('Picj league ID', unique_leagues)
+        selected_league = st.sidebar._selectbox('Pick league ID', unique_leagues)
 
         st.sidebar.divider()
         st.sidebar.subheader(":blue[Data sources]")
