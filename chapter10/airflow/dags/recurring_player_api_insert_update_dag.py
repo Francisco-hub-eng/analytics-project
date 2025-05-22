@@ -35,4 +35,25 @@ def recurring_player_api_insert_update_dag():
 
     temp_min_last_change_date = "2024-04-01"
 
-    
+    api_player_query_task = HttpOperator(
+        task_id = "api_player_query",
+        http_conn_id = "sportsworldcentral_url",
+        endpoint=(
+            f"/v0/players/?skip=0&limit=100000&minimum_last_changed_date="
+            f"{temp_min_last_change_date}"
+        ),
+        method="GET",
+        headers={"Content-Type": "application/json"}
+    )
+
+    player_sqlite_upsert_task = PythonOperator(
+        task_id = "player_sqlite_upsert",
+        python_callable=insert_update_player_data,
+        provide_context=True
+    )
+
+    # Run order of tasks
+    api_health_check_task >> api_player_query_task >> player_sqlite_upsert_task
+
+# instantiate de DAG
+dag_instance = recurring_player_api_insert_update_dag()
