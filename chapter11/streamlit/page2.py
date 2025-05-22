@@ -47,4 +47,13 @@ try:
         right_on='player_id'
     )
 
+    grouped_df = merged_df.groupby('team_name')['total_tds'].sum()
+
+    fig, ax = plt.subplots()
+    grouped_df.plot(kind="barh", xlabel='Total TDs',
+                    ylabel="Team Name", title="Total TDs - 2023", ax=ax)
     
+    st.pyplot(fig)
+
+except Exception as e:
+    st.write(f"An unexpected error occurred: {str(e)}")
