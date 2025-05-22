@@ -42,4 +42,13 @@ def upsert_player_data(player_json):
                         player['position'],
                         player['last_cjanged_date']
                     ))
-                
+                except Exception as e:
+                    logging.error(
+                        f"Failed to insert player {player['player_id']}: {e}"
+                    )
+                    raise
+    else :
+        logging.warning("No player data found.")
+        raise ValueError(
+            "No player data found. Task failed due to missing data."
+        )
