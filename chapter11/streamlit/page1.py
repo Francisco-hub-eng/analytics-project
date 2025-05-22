@@ -24,5 +24,6 @@ try:
         if 'unique_leagues' not in st.session_state:
             st.session_state['unique_leagues'] = unique_leagues
 
-except ValueError:
-    print("Value error")
+except Exception as e:
+    st.subheader("An error occurred")
+    logging.error(f"An error occurred: {e}")
